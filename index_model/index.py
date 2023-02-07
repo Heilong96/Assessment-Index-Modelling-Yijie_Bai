@@ -16,6 +16,10 @@ class IndexModel:
             reader = csv.reader(f)
             next(reader, None)
             stock_data = [row for row in reader]
+        # Remove weekends, if any
+        for date in stock_data:
+            if dt.datetime.strptime(date[0], '%d/%m/%Y').date().weekday() in [5, 6]:
+                stock_data.remove(date)
         # Initialize values
         initial_index_value = 100
         initial_portfolio_value = 0
